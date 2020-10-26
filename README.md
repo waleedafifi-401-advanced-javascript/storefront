@@ -12,5 +12,14 @@
 - As a user, I want to choose a category and see a list of all available products matching that category
 - As a user, I want a clean, easy to use user interface so that I can shop the online store with confidence
 
-UML
-*Looding...*
+## Clone and run
+```
+    git clone https://github.com/waleedafifi-401-advanced-javascript/storefront.git
+    
+    npm install
+
+    npm start
+```
+
+#### UML
+![](./uml/uml.jpg)

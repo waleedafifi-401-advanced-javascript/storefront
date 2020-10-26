@@ -79,3 +79,27 @@ h1, h2, h3, h4, h5, h6 { font-weight: 400!important;}
     letter-spacing: 0.00938em;
     margin: 0;
 }
+
+.MuiList-root:after {
+  content: "";
+  width: 100%;
+  height: 5px;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background-image: linear-gradient(135deg,transparent 66%,#f5f5f5 67%),linear-gradient(45deg,#f5f5f5 33%,grey 34%,transparent 44%);
+  background-position: -5px 0;
+  background-size: 10px 100%;
+  background-repeat: repeat-x;
+  top: 100%;
+  bottom: auto;
+  background-image: linear-gradient(135deg,#f5f5f5 33%,grey 34%,transparent 44%),linear-gradient(45deg,transparent 66%,#f5f5f5 67%);
+}
+
+.MuiList-root li {
+  border-bottom: 1px solid #ccc;
+}
+
+.MuiList-root li:last-child {
+  border-bottom: none;
+}

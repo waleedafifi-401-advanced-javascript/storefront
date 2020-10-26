@@ -1,4 +1,6 @@
 import React from 'react';
+import { addToCart } from '../store/cart';
+import { decreaseInventory } from '../store/products';
 
 import { connect } from 'react-redux';
 
@@ -46,10 +48,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
 const Products = props => {
 
     const productList = props.products.filter(product => product.category === props.active);
 
+    const buttonHandler = product => {
+        props.addToCart(product);
+        props.decreaseInventory(product.name);
+    }
+    
     const classes = useStyles();
 
     return (
@@ -84,7 +92,7 @@ const Products = props => {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button style={{ fontSize: '0.8125rem' }} color="primary">Add to Cart</Button>
+                        <Button style={{ fontSize: '0.8125rem' }} color="primary" onClick={() => buttonHandler(product)}>Add to Cart</Button>
                     </CardActions>
                     </Card>
 
@@ -116,4 +124,6 @@ const mapStateToProps = store => ({
     active: store.category.activeCategory,
 });
 
-export default connect(mapStateToProps)(Products);
+const mapDispatchToProps = { addToCart, decreaseInventory };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

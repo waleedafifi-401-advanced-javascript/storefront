@@ -27,7 +27,7 @@ const Categories = props => {
     const classes = useStyles();
 
   return (
-    <>
+    <React.Fragment>
         <CssBaseline />
         <Box>
             <h2 className={classes.browseCategories}>Browse our Categories</h2>
@@ -40,7 +40,7 @@ const Categories = props => {
                 ))}
             </ButtonGroup>
         </Box>
-    </>
+    </React.Fragment>
   )
 }
 
