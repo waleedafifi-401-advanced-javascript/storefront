@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { changeActiveCategory } from '../store/categories';
+import { changeActiveCategory, getCategories } from '../store/categories'
 
-import {Box, ButtonGroup, Button, CssBaseline} from '@material-ui/core';
+import {Box, CircularProgress, ButtonGroup, Button, CssBaseline} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
@@ -24,18 +24,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Categories = props => {
-    const classes = useStyles();
+  let { getCategories, categories, active, changeActiveCategory } = props;
+
+  const classes = useStyles();
+
+  useEffect(() => {
+    getCategories();
+  }, [getCategories]);
 
   return (
     <React.Fragment>
         <CssBaseline />
         <Box>
             <h2 className={classes.browseCategories}>Browse our Categories</h2>
-            <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
-                {props.categories.map(category => (
+              <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
+                {categories.map(category => (
                     <Button key={category.name} onClick={() => props.changeActiveCategory(category.name)}>
                         {props.active === category.name}
-                            {category.displayName}
+                            {category.name}
                     </Button>
                 ))}
             </ButtonGroup>
@@ -49,6 +55,6 @@ const mapStateToProps = store => ({
   active: store.category.activeCategory,
 })
 
-const mapDispatchToProps = { changeActiveCategory };
+const mapDispatchToProps = { changeActiveCategory, getCategories };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);

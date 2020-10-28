@@ -1,3 +1,7 @@
+import axios from 'axios';
+import { loading } from './loading';
+const url = `https://amman-api-server.herokuapp.com/categories`;
+
 let initialState = {
     categories: [{
             name: 'electronics',
@@ -19,27 +23,46 @@ let initialState = {
     activeCategory: 'clothing',
 };
 
-export default (state = initialState, action) => {
+export default (state = {categories: []}, action) => {
 
-    let {
-        type,
-        payload
-    } = action;
-
+    let { type, payload } = action;
+  
     switch (type) {
-        case 'CHANGEACTIVE':
-            return {
-                ...state,
-                activeCategory: payload
-            }
-        default:
-            return state;
+      case 'CHANGE_ACTIVE':
+        return {
+          ...state,
+          activeCategory: payload
+        }
+      case 'GET_CATEGORIES':
+        return {
+          categories: payload,
+          activeCategory: '' 
+        };
+      default:
+        return state;
     }
-}
-
-export const changeActiveCategory = name => {
-    return {
-        type: 'CHANGEACTIVE',
-        payload: name,
+  }
+  
+  export const getCategories = () => {
+  
+  
+    return async dispatch => {
+  
+      dispatch(loading(true));
+      let response = await axios({ url, method: 'GET' });
+      dispatch(loading(false));
+  
+      dispatch({
+        type: 'GET_CATEGORIES',
+        payload: response.data.results
+          .filter(product => product.name !== 'admin')
+      })
+  
     }
-};
+  
+  }
+  
+  export const changeActiveCategory = name => ({
+    type: 'CHANGE_ACTIVE',
+    payload: name,
+  })

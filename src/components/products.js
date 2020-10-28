@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { addToCart } from '../store/cart';
-import { decreaseInventory } from '../store/products';
+import { decreaseInventory, getProducts } from '../store/products';
 
 import { connect } from 'react-redux';
 
-import { Box, CardMedia, Container, Grid, Card, CardContent, CardActions, Button, Typography } from '@material-ui/core';
+import { Box, CardMedia, CircularProgress, Container, Grid, Card, CardContent, CardActions, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,17 +51,25 @@ const useStyles = makeStyles((theme) => ({
 
 const Products = props => {
 
-    const productList = props.products.filter(product => product.category === props.active);
 
-    const buttonHandler = product => {
-        props.addToCart(product);
-        props.decreaseInventory(product.name);
-    }
-    
     const classes = useStyles();
+    const getProducts = props.getProducts;
+  
+    useEffect(() => {
+      getProducts();
+    }, [getProducts]);
+    
+  
+    const buttonHandler = product => {
+      props.addToCart(product);
+      props.decreaseInventory(product);
+    }
+
+    const productList = props.products.filter(product => product.category === props.active);
 
     return (
         <Container maxWidth="md" component="main">
+            
             <Box className={classes.jss5} textAlign="center">
                 <Typography variant="h2" color="textPrimary">
                     {productList.length > 0 ? productList[0].category.toUpperCase() : ''}
@@ -71,6 +79,7 @@ const Products = props => {
                 </Typography>
             </Box>
             <Grid className={classes.jss7} container spacing={0} direction="row" justify="center"  alignItems="center">
+            
             {productList.map(product => (
 
                 <Grid className={classes.jss8} container item xs={12} sm={6} lg={4} >
@@ -122,8 +131,9 @@ const Products = props => {
 const mapStateToProps = store => ({
     products: store.product.products,
     active: store.category.activeCategory,
-});
-
-const mapDispatchToProps = { addToCart, decreaseInventory };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Products);
+  });
+  
+  const mapDispatchToProps = { addToCart, decreaseInventory, getProducts };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Products);
+  
