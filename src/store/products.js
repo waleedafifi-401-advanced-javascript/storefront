@@ -56,10 +56,6 @@ let initialState = {
     ]
 };
 
-// export default (state = initialState) => {
-//     return state;
-// };
-
 export default (state = { products:[] }, action) => {
 
     const { type, payload } = action;
@@ -110,6 +106,8 @@ export const decreaseInventory = product => {
 
 export const increaseInventory = product => {
     return async dispatch => {
+
+        console.log(product);
 
         product.inStock++;
         await axios({
