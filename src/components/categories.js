@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-
-import { changeActiveCategory, getCategories } from '../store/categories'
+import { setCurrentCategory, getCategories } from '../store/categories-slice';
 
 import {Box, CircularProgress, ButtonGroup, Button, CssBaseline} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Categories = props => {
-  let { getCategories, categories, active, changeActiveCategory } = props;
+  const { getCategories, setCurrentCategory, categories } = props;
 
   const classes = useStyles();
 
@@ -38,10 +37,11 @@ const Categories = props => {
         <Box>
             <h2 className={classes.browseCategories}>Browse our Categories</h2>
               <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
+                {console.log(props)}
                 {categories.map(category => (
-                    <Button key={category.name} onClick={() => props.changeActiveCategory(category.name)}>
-                        {props.active === category.name}
-                            {category.name}
+                    <Button key={category.name} onClick={() => setCurrentCategory(category.name)}>
+                        {/* {props.active === category.name} */}
+                        {category.displayName || category.name}
                     </Button>
                 ))}
             </ButtonGroup>
@@ -51,10 +51,12 @@ const Categories = props => {
 }
 
 const mapStateToProps = store => ({
-  categories: store.category.categories,
-  active: store.category.activeCategory,
+  categories: store.categories.categories,
 })
 
-const mapDispatchToProps = { changeActiveCategory, getCategories };
+const mapDispatchToProps = {
+  setCurrentCategory,
+  getCategories,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categories);

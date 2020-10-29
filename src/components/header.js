@@ -1,6 +1,8 @@
 import React from 'react';
-import { Grid, AppBar, CssBaseline, Toolbar, Typography  } from '@material-ui/core';
+import { Grid, AppBar, CssBaseline, Toolbar } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 const Header = (props) => {
     return (
@@ -9,9 +11,16 @@ const Header = (props) => {
             <AppBar position="static" elevation={0} className="MuiAppBar-root">
                 <Toolbar className="">
                     <Grid container justify="space-between" alignItems="center" >
-                    <Typography variant="h4">Storefront</Typography>
-        
-                    <Typography variant="h6">Cart ({props.cart.length})</Typography>
+                    <Button 
+                        to='/'
+                        component={Link}>
+                        Storefront
+                    </Button>
+                    <Button 
+                        to='/checkout'
+                        component={Link}>
+                        Cart ({props.cart.length})
+                    </Button>
                 </Grid>
                 </Toolbar>
             </AppBar>
@@ -21,21 +30,8 @@ const Header = (props) => {
     
 const mapStateToProps = store => {
     return {
-        cart: store.cart.items,
+        cart: store.cart.cart,
     }
 }
     
 export default connect(mapStateToProps)(Header)
-// export default () => (
-//     <React.Fragment>
-//         <CssBaseline />
-//         <AppBar position="static" elevation={0} className="MuiAppBar-root">
-//             <Toolbar className="">
-//                 <Grid container justify="space-between" alignItems="center" >
-//                     <Typography variant="h4">Storefront</Typography>
-//                     <Typography variant="h6">Cart (1)</Typography>
-//                 </Grid>
-//             </Toolbar>
-//         </AppBar>
-//     </React.Fragment>
-// )

@@ -6,12 +6,21 @@
 **Author**: ***Waleed A. Afifi***
 
 
-**Virtual Store Phase 3**: Connect the Virtual Store to an API to retrieve live data from your data source, using `thunk` to enable asynchronous actions
+### Phase 4 Requirements
+In phase 4, we will be completing work on our Virtual Store by adding a two full page views to the application: Product Details and Checkout
+
+### User Stories
+
+As a user, I want to see a full detail view of a product so that I can make a more informed choice about purchasing it.
+As a user, I want to view my full cart and initiate the checkout process so that I can purchase my items and have them delivered
 
 
-- As a user, I want to interact with live inventory so that I have confidence that the displayed products are in stock
-- As a user, I want to know to that when I add an item to my cart, that it is removed from inventory so that no other users can purchase it
+### Technical Tasks
 
+Add routing to the application
+Link every product to a page that displays the full product details
+Link the “Cart” summary in the header to a full shopping cart page with shipping/payment forms
+Additionally, we will be swapping out our Redux store and replacing it with a store built using Redux Toolkit
 
 ## Clone and run
 ```
